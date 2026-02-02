@@ -48,6 +48,11 @@ button{
   cursor:pointer;
 }
 
+button:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
 #yesBtn{background:#ff4d6d;color:white}
 #fakeNoBtn{background:#f1f1f1}
 
@@ -113,6 +118,25 @@ button{
   font-size:.95rem;
   line-height:1.8;
   margin-top:1rem;
+  padding:0;
+}
+
+.movie{
+  list-style:none;
+  padding:.6rem .8rem;
+  border-radius:12px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.movie:hover{
+  background:#ffe5ea;
+}
+
+.movie.selected{
+  background:#ff4d6d;
+  color:white;
+  font-weight:600;
 }
 
 /* Screenshot */
@@ -181,7 +205,6 @@ button{
 <!-- YES -->
 <div class="card final" id="finalCard">
   <h2 style="color:#ff4d6d">EVERYBODY SHE FINALLY SAID YES!!!! 🎉</h2>
-  <div style="font-size:3rem">❤️</div>
   <h1>KNEW IT.</h1>
   <div id="countdown"></div>
   <p>So… how are we doing Valentine’s?</p>
@@ -195,16 +218,18 @@ button{
 <!-- MOVIES -->
 <div class="card movies" id="movieCard">
   <h2>Movie Night It Is 🎬</h2>
-  <p>You pick. I’m in.</p>
-  <ul class="movie-list">
-    <li>🌀 Eternal Sunshine of the Spotless Mind</li>
-    <li>💛 Hasee Toh Phasee</li>
-    <li>🌙 OK Kanmani (the OG)</li>
-    <li>🔥 Dear Comrade</li>
-    <li>🎓 Happy Days</li>
-    <li>🌱 Yeto Vellipoyindhi Manasu</li>
+  <p>Pick one. Choose wisely 😌</p>
+
+  <ul class="movie-list" id="movieList">
+    <li class="movie">Eternal Sunshine of the Spotless Mind</li>
+    <li class="movie">Hasee Toh Phasee</li>
+    <li class="movie">OK Kanmani (the OG)</li>
+    <li class="movie">Dear Comrade</li>
+    <li class="movie">Happy Days</li>
+    <li class="movie">Yeto Vellipoyindhi Manasu</li>
   </ul>
-  <button id="confirmMovie">We choose this 💕</button>
+
+  <button id="confirmMovie" disabled>We choose this 💕</button>
 </div>
 
 <!-- CAUGHT -->
@@ -246,7 +271,11 @@ const loader=document.getElementById("loader");
 const finalChoice=document.getElementById("finalChoice");
 const countdownEl=document.getElementById("countdown");
 
+const movieList=document.querySelectorAll(".movie");
+const confirmMovie=document.getElementById("confirmMovie");
+
 let noCount=0;
+let selectedMovie="";
 
 /* YES */
 yesBtn.onclick=()=>{
@@ -266,6 +295,21 @@ function startCountdown(){
     countdownEl.textContent=`${d} days ${h} hours to Valentine’s 💌`;
   },1000);
 }
+
+/* Movie selection */
+movieList.forEach(movie=>{
+  movie.onclick=()=>{
+    movieList.forEach(m=>m.classList.remove("selected"));
+    movie.classList.add("selected");
+    selectedMovie=movie.textContent;
+    confirmMovie.disabled=false;
+  };
+});
+
+confirmMovie.onclick=()=>{
+  movieCard.style.display="none";
+  showFinal(`Movie Night 🎬 — ${selectedMovie}`);
+};
 
 /* NO logic */
 realNoBtn.onclick=()=>{
@@ -289,7 +333,7 @@ realNoBtn.onclick=()=>{
       setTimeout(showRiddle,1400);
     }
     else{
-      caughtText.textContent="Chup-chap back daba de ha 😌";
+      caughtText.textContent="Chup-chap back daba de 😌";
       riddleArea.innerHTML=`<button id="forceBack">Back to the question</button>`;
       document.getElementById("forceBack").onclick=()=>{
         caughtCard.style.display="none";
@@ -340,17 +384,7 @@ fakeNoBtn.onmouseover=()=>{
   fakeNoBtn.style.transform=`translate(${Math.random()*200-100}px,${Math.random()*200-100}px)`;
 };
 
-/* Movie + choices */
-document.getElementById("movieBtn").onclick=()=>{
-  finalCard.style.display="none";
-  movieCard.style.display="block";
-};
-
-document.getElementById("confirmMovie").onclick=()=>{
-  movieCard.style.display="none";
-  showFinal("Movie Night 🎬");
-};
-
+/* Final */
 document.querySelectorAll(".choiceBtn").forEach(btn=>{
   btn.onclick=()=>{
     finalCard.style.display="none";
@@ -382,4 +416,3 @@ function launchConfetti(){
 
 </body>
 </html>
-
