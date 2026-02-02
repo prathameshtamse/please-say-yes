@@ -1,57 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Important Question 💌</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      overflow: hidden;
-    }
-    .card {
-      background: white;
-      padding: 2.5rem;
-      border-radius: 18px;
-      width: min(90%, 420px);
-      text-align: center;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-      position: relative;
-      z-index: 2;
-    }
-    h1 { font-size: 2rem; margin-bottom: 1rem; min-height: 2.6rem; }
-    p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; }
-    .buttons { display: flex; justify-content: center; gap: 1rem; }
-    button { border: none; padding: 0.8rem 1.4rem; border-radius: 999px; font-size: 1rem; cursor: pointer; }
-    #yesBtn { background: #ff4d6d; color: white; }
-    #fakeNoBtn { background: #f1f1f1; color: #333; position: relative; }
-    #realNoBtn {
-      position: absolute;
-      top: -3px;
-      left: 0px;
-      font-size: 0.5rem;
-      color: rgba(0,0,0,0.25);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      opacity: 0.25;
-    }
-    #realNoBtn:hover { opacity: 0.5; }
-    .final, .caught { display: none; }
-    .spinner { width: 36px; height: 36px; border: 4px solid #eee; border-top: 4px solid #ff4d6d; border-radius: 50%; animation: spin 0.9s linear infinite; margin: 0 auto 1rem; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .word { display: inline-block; margin-right: 0.35rem; animation: bounceIn 0.45s ease forwards; }
-    @keyframes bounceIn { 0% { transform: scale(0.2); opacity: 0; } 60% { transform: scale(1.25); opacity: 1; } 100% { transform: scale(1); } }
-    input { padding: 0.6rem; font-size: 1rem; margin-top: 1rem; width: 70%; text-align: center; }
-    .shake { animation: shake 0.3s; }
-    @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } 100% { transform: translateX(0); } }
-  </style>
+<meta charset="UTF-8">
+<title>Important Question 💌</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden;
+}
+.card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 18px;
+  width: min(90%, 420px);
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+  position: relative;
+  z-index: 2;
+}
+h1 { font-size: 2rem; margin-bottom: 1rem; min-height: 2.6rem; }
+p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; }
+.buttons { display: flex; justify-content: center; gap: 1rem; }
+button { border: none; padding: 0.8rem 1.4rem; border-radius: 999px; font-size: 1rem; cursor: pointer; }
+#yesBtn { background: #ff4d6d; color: white; }
+#fakeNoBtn { background: #f1f1f1; color: #333; position: relative; }
+#realNoBtn {
+  position: absolute;
+  top: -2px;
+  left: 0px;
+  font-size: 0.5rem;
+  color: rgba(0,0,0,0.25);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.25;
+}
+#realNoBtn:hover { opacity: 0.5; }
+.final, .caught { display: none; }
+.spinner { width: 36px; height: 36px; border: 4px solid #eee; border-top: 4px solid #ff4d6d; border-radius: 50%; animation: spin 0.9s linear infinite; margin: 0 auto 1rem; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.word { display: inline-block; margin-right: 0.35rem; animation: bounceIn 0.45s ease forwards; }
+@keyframes bounceIn { 0% { transform: scale(0.2); opacity: 0; } 60% { transform: scale(1.25); opacity: 1; } 100% { transform: scale(1); } }
+input { padding: 0.6rem; font-size: 1rem; margin-top: 1rem; width: 70%; text-align: center; }
+.shake { animation: shake 0.3s; }
+@keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } 100% { transform: translateX(0); } }
+</style>
 </head>
 <body>
 
@@ -63,7 +63,7 @@
     You make <span style="position: relative;">nor
       <button id="realNoBtn">no</button>
     </span>mal days better just by existing.<br><br>
-    So one honest question:<br>  
+    So one honest question:<br>
     Will you be my <strong>Valentine? ❤️</strong>
   </p>
   <div class="buttons">
@@ -85,81 +85,88 @@
 </div>
 
 <script>
-  const questionCard = document.getElementById("questionCard");
-  const finalCard = document.getElementById("finalCard");
-  const caughtCard = document.getElementById("caughtCard");
-  const caughtText = document.getElementById("caughtText");
-  const riddleArea = document.getElementById("riddleArea");
-  const yesBtn = document.getElementById("yesBtn");
-  const realNoBtn = document.getElementById("realNoBtn");
+const questionCard = document.getElementById("questionCard");
+const finalCard = document.getElementById("finalCard");
+const caughtCard = document.getElementById("caughtCard");
+const caughtText = document.getElementById("caughtText");
+const riddleArea = document.getElementById("riddleArea");
+const yesBtn = document.getElementById("yesBtn");
+const realNoBtn = document.getElementById("realNoBtn");
 
-  let noCount = 0;
+let noCount = 0;
 
-  yesBtn.addEventListener("click", () => {
-    questionCard.style.display = "none";
-    finalCard.style.display = "block";
-  });
+yesBtn.addEventListener("click", () => {
+  questionCard.style.display = "none";
+  finalCard.style.display = "block";
+});
 
-  realNoBtn.addEventListener("click", () => {
-    noCount++;
-    questionCard.style.display = "none";
-    caughtCard.style.display = "block";
-    document.getElementById("loader").style.display = "block";
-    caughtText.innerHTML = "";
-    riddleArea.innerHTML = "";
+realNoBtn.addEventListener("click", () => {
+  noCount++;
+  questionCard.style.display = "none";
+  caughtCard.style.display = "block";
+  document.getElementById("loader").style.display = "block";
+  caughtText.innerHTML = "";
+  riddleArea.innerHTML = "";
 
-    setTimeout(() => {
-      document.getElementById("loader").style.display = "none";
+  setTimeout(() => {
+    document.getElementById("loader").style.display = "none";
 
-      if (noCount === 1) {
-        bounceWords(["Shaani","banri","h?"]);
-      } else if (noCount === 2) {
-        bounceWords(["Jyada","hi","shaani","banri","h?"]);
-        setTimeout(showRiddle, 2000);
+    if(noCount === 1){
+      bounceWords(["Shaani","banri","h?"]);
+    } else if(noCount === 2){
+      bounceWords(["Jyada","hi","shaani","banri","h?"]);
+      setTimeout(showRiddle, 1500);
+    } else {
+      caughtText.innerHTML = "Option nahi h HELLO?? 😏";
+      riddleArea.innerHTML = `<button id="backToQuestion">Back to question</button>`;
+      document.getElementById("backToQuestion").addEventListener("click", () => {
+        caughtCard.style.display = "none";
+        questionCard.style.display = "block";
+      });
+    }
+  }, 800);
+});
+
+function bounceWords(words){
+  caughtText.innerHTML="";
+  let i=0;
+  const interval=setInterval(()=>{
+    const span=document.createElement("span");
+    span.className="word";
+    span.textContent=words[i];
+    caughtText.appendChild(span);
+    i++;
+    if(i===words.length) clearInterval(interval);
+  }, 350);
+}
+
+function showRiddle(){
+  riddleArea.innerHTML=`
+    <p>Maarunga kheech ke giregi ____ pe</p>
+    <input id="answer" placeholder="fill the blank">
+  `;
+  const input=document.getElementById("answer");
+  input.addEventListener("keydown", e=>{
+    if(e.key==="Enter"){
+      if(input.value.trim().toLowerCase()==="beach"){
+        caughtCard.style.display="none";
+        questionCard.style.display="block";
       } else {
-        caughtText.innerHTML = "We both know how this ends 😏";
-        riddleArea.innerHTML = `<button id="backToQuestion">Back to question</button>`;
-        document.getElementById("backToQuestion").addEventListener("click", () => {
-          caughtCard.style.display = "none";
-          questionCard.style.display = "block";
-        });
+        input.classList.add("shake");
+        setTimeout(()=>input.classList.remove("shake"),300);
       }
-    }, 900);
+    }
   });
+}
 
-  function bounceWords(words) {
-    caughtText.innerHTML = "";
-    let i=0;
-    const interval = setInterval(() => {
-      const span = document.createElement("span");
-      span.className = "word";
-      span.textContent = words[i];
-      caughtText.appendChild(span);
-      i++;
-      if(i===words.length) clearInterval(interval);
-    }, 350);
-  }
-
-  function showRiddle() {
-    riddleArea.innerHTML = `
-      <p>Maarunga kheech ke giregi ____ pe</p>
-      <input id="answer" placeholder="fill the blank">
-    `;
-    const input = document.getElementById("answer");
-    input.addEventListener("keydown", e => {
-      if(e.key==="Enter"){
-        if(input.value.trim().toLowerCase()==="beach"){
-          caughtCard.style.display="none";
-          questionCard.style.display="block";
-        } else {
-          input.classList.add("shake");
-          setTimeout(()=>input.classList.remove("shake"),300);
-        }
-      }
-    });
-  }
+// Optional: Move fakeNoBtn randomly
+const fakeNoBtn = document.getElementById("fakeNoBtn");
+fakeNoBtn.addEventListener("mouseover", ()=>{
+  const x=Math.random()*220-110;
+  const y=Math.random()*220-110;
+  fakeNoBtn.style.transform=`translate(${x}px,${y}px)`;
+});
 </script>
 
 </body>
 </html>
-
