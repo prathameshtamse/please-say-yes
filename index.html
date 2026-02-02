@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Important Question 💌</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
     body {
       margin: 0;
@@ -16,7 +15,6 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       overflow: hidden;
     }
-
     .card {
       background: white;
       padding: 2.5rem;
@@ -27,259 +25,140 @@
       position: relative;
       z-index: 2;
     }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      min-height: 2.6rem;
-    }
-
-    p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-    }
-
-    button {
-      border: none;
-      padding: 0.8rem 1.4rem;
-      border-radius: 999px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-
-    #yesBtn {
-      background: #ff4d6d;
-      color: white;
-    }
-
-    #fakeNoBtn {
-      background: #f1f1f1;
-      color: #333;
-      position: relative;
-    }
-
+    h1 { font-size: 2rem; margin-bottom: 1rem; min-height: 2.6rem; }
+    p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; }
+    .buttons { display: flex; justify-content: center; gap: 1rem; }
+    button { border: none; padding: 0.8rem 1.4rem; border-radius: 999px; font-size: 1rem; cursor: pointer; }
+    #yesBtn { background: #ff4d6d; color: white; }
+    #fakeNoBtn { background: #f1f1f1; color: #333; position: relative; }
     #realNoBtn {
       position: absolute;
-      bottom: 12px;
-      right: 14px;
-      font-size: 0.7rem;
+      top: -3px;
+      left: 0px;
+      font-size: 0.5rem;
+      color: rgba(0,0,0,0.25);
       background: transparent;
-      color: #999;
       border: none;
       cursor: pointer;
+      opacity: 0.25;
     }
-
-    .final, .caught {
-      display: none;
-    }
-
-    .heart {
-      font-size: 3rem;
-      animation: pop 0.6s ease forwards;
-    }
-
-    @keyframes pop {
-      0% { transform: scale(0); }
-      70% { transform: scale(1.3); }
-      100% { transform: scale(1); }
-    }
-
-    .spinner {
-      width: 36px;
-      height: 36px;
-      border: 4px solid #eee;
-      border-top: 4px solid #ff4d6d;
-      border-radius: 50%;
-      animation: spin 0.9s linear infinite;
-      margin: 0 auto 1rem;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .word {
-      display: inline-block;
-      margin-right: 0.35rem;
-      animation: bounceIn 0.45s ease forwards;
-    }
-
-    @keyframes bounceIn {
-      0% { transform: scale(0.2); opacity: 0; }
-      60% { transform: scale(1.25); opacity: 1; }
-      100% { transform: scale(1); }
-    }
-
-    .backBtn {
-      margin-top: 1.5rem;
-      background: #ff4d6d;
-      color: white;
-    }
-
-    .confetti {
-      position: fixed;
-      width: 8px;
-      height: 8px;
-      top: -10px;
-      animation: fall linear forwards;
-      z-index: 1;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(110vh) rotate(720deg);
-        opacity: 0;
-      }
-    }
+    #realNoBtn:hover { opacity: 0.5; }
+    .final, .caught { display: none; }
+    .spinner { width: 36px; height: 36px; border: 4px solid #eee; border-top: 4px solid #ff4d6d; border-radius: 50%; animation: spin 0.9s linear infinite; margin: 0 auto 1rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .word { display: inline-block; margin-right: 0.35rem; animation: bounceIn 0.45s ease forwards; }
+    @keyframes bounceIn { 0% { transform: scale(0.2); opacity: 0; } 60% { transform: scale(1.25); opacity: 1; } 100% { transform: scale(1); } }
+    input { padding: 0.6rem; font-size: 1rem; margin-top: 1rem; width: 70%; text-align: center; }
+    .shake { animation: shake 0.3s; }
+    @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } 100% { transform: translateX(0); } }
   </style>
 </head>
-
 <body>
 
-  <!-- QUESTION -->
-  <div class="card" id="questionCard">
-    <h1>Hey Sheryl 👀</h1>
-    <p>
-      I tried being chill about this.<br>
-      That lasted about five seconds.<br><br>
-      You make normal days better just by existing.<br><br>
-      So one honest question:<br>
-      <strong>Kanmani, Will you be my Valentine? 💖</strong>
-    </p>
-
-    <div class="buttons">
-      <button id="yesBtn">YES 💖</button>
-      <button id="fakeNoBtn">No 🙃</button>
-    </div>
-
-    <button id="realNoBtn">no</button>
+<div class="card" id="questionCard">
+  <h1>Hey Kanmani 👀</h1>
+  <p>
+    I tried being chill about this.<br>
+    That lasted about five seconds.<br><br>
+    You make <span style="position: relative;">nor
+      <button id="realNoBtn">no</button>
+    </span>mal days better just by existing.<br><br>
+    So one honest question:<br>  
+    Will you be my <strong>Valentine?</strong>
+  </p>
+  <div class="buttons">
+    <button id="yesBtn">YES 💖</button>
+    <button id="fakeNoBtn">No 🙃</button>
   </div>
+</div>
 
-  <!-- YES -->
-  <div class="card final" id="finalCard">
-    <div class="heart">❤️</div>
-    <h1>KNEW IT.</h1>
-    <p>
-      Elite decision.<br><br>
-      Valentine’s with you is going to be perfect 💕
-    </p>
-  </div>
+<div class="card final" id="finalCard">
+  <div class="word" style="font-size:3rem;">❤️</div>
+  <h1>KNEW IT.</h1>
+  <p>Elite decision.<br><br>Valentine’s with you is going to be perfect 💕</p>
+</div>
 
-  <!-- CAUGHT -->
-  <div class="card caught" id="caughtCard">
-    <div class="spinner" id="loader"></div>
-    <h1 id="caughtText"></h1>
-    <button class="backBtn" id="backBtn">Go back 😌</button>
-  </div>
+<div class="card caught" id="caughtCard">
+  <div class="spinner" id="loader"></div>
+  <h1 id="caughtText"></h1>
+  <div id="riddleArea"></div>
+</div>
 
 <script>
   const questionCard = document.getElementById("questionCard");
   const finalCard = document.getElementById("finalCard");
   const caughtCard = document.getElementById("caughtCard");
-
+  const caughtText = document.getElementById("caughtText");
+  const riddleArea = document.getElementById("riddleArea");
   const yesBtn = document.getElementById("yesBtn");
-  const fakeNoBtn = document.getElementById("fakeNoBtn");
   const realNoBtn = document.getElementById("realNoBtn");
 
-  const loader = document.getElementById("loader");
-  const caughtText = document.getElementById("caughtText");
-  const backBtn = document.getElementById("backBtn");
-
-  let audioCtx = null;
-
-  fakeNoBtn.addEventListener("mouseover", () => {
-    const x = Math.random() * 220 - 110;
-    const y = Math.random() * 220 - 110;
-    fakeNoBtn.style.transform = `translate(${x}px, ${y}px)`;
-  });
+  let noCount = 0;
 
   yesBtn.addEventListener("click", () => {
     questionCard.style.display = "none";
     finalCard.style.display = "block";
-    launchConfetti();
   });
 
   realNoBtn.addEventListener("click", () => {
+    noCount++;
     questionCard.style.display = "none";
     caughtCard.style.display = "block";
-    startCaught();
-  });
-
-  backBtn.addEventListener("click", () => {
-    resetCaught();
-    caughtCard.style.display = "none";
-    questionCard.style.display = "block";
-  });
-
-  function startCaught() {
-    resetCaught();
-    playTsk();
-    setTimeout(() => {
-      loader.style.display = "none";
-      bounceWords(["Shaani", "banri", "h?"]);
-    }, 900);
-  }
-
-  function resetCaught() {
-    loader.style.display = "block";
+    document.getElementById("loader").style.display = "block";
     caughtText.innerHTML = "";
-  }
+    riddleArea.innerHTML = "";
+
+    setTimeout(() => {
+      document.getElementById("loader").style.display = "none";
+
+      if (noCount === 1) {
+        bounceWords(["Shaani","banri","h?"]);
+      } else if (noCount === 2) {
+        bounceWords(["Jyada","hi","shaani","banri","h?"]);
+        setTimeout(showRiddle, 2000);
+      } else {
+        caughtText.innerHTML = "We both know how this ends 😏";
+        riddleArea.innerHTML = `<button id="backToQuestion">Back to question</button>`;
+        document.getElementById("backToQuestion").addEventListener("click", () => {
+          caughtCard.style.display = "none";
+          questionCard.style.display = "block";
+        });
+      }
+    }, 900);
+  });
 
   function bounceWords(words) {
-    let i = 0;
+    caughtText.innerHTML = "";
+    let i=0;
     const interval = setInterval(() => {
       const span = document.createElement("span");
       span.className = "word";
       span.textContent = words[i];
       caughtText.appendChild(span);
       i++;
-      if (i === words.length) clearInterval(interval);
-    }, 450);
+      if(i===words.length) clearInterval(interval);
+    }, 350);
   }
 
-  function playTsk() {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-
-    const now = audioCtx.currentTime;
-
-    function tsk(time) {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.frequency.value = 900;
-      gain.gain.value = 0.08;
-      osc.connect(gain).connect(audioCtx.destination);
-      osc.start(time);
-      osc.stop(time + 0.05);
-    }
-
-    tsk(now);
-    tsk(now + 0.18);
-  }
-
-  function launchConfetti() {
-    const colors = ["#ff4d6d", "#ffd166", "#06d6a0", "#4d96ff"];
-    for (let i = 0; i < 120; i++) {
-      const c = document.createElement("div");
-      c.className = "confetti";
-      c.style.left = Math.random() * 100 + "vw";
-      c.style.background = colors[Math.floor(Math.random() * colors.length)];
-      c.style.animationDuration = 2 + Math.random() * 2 + "s";
-      document.body.appendChild(c);
-      setTimeout(() => c.remove(), 4000);
-    }
+  function showRiddle() {
+    riddleArea.innerHTML = `
+      <p>Maarunga kheech ke giregi ____ pe</p>
+      <input id="answer" placeholder="fill the blank">
+    `;
+    const input = document.getElementById("answer");
+    input.addEventListener("keydown", e => {
+      if(e.key==="Enter"){
+        if(input.value.trim().toLowerCase()==="beach"){
+          caughtCard.style.display="none";
+          questionCard.style.display="block";
+        } else {
+          input.classList.add("shake");
+          setTimeout(()=>input.classList.remove("shake"),300);
+        }
+      }
+    });
   }
 </script>
 
 </body>
 </html>
-
-
