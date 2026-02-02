@@ -26,23 +26,12 @@ body {
   z-index: 2;
 }
 h1 { font-size: 2rem; margin-bottom: 1rem; min-height: 2.6rem; }
+h2 { margin: 0; }
 p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; }
 .buttons { display: flex; justify-content: center; gap: 1rem; }
 button { border: none; padding: 0.8rem 1.4rem; border-radius: 999px; font-size: 1rem; cursor: pointer; }
 #yesBtn { background: #ff4d6d; color: white; }
 #fakeNoBtn { background: #f1f1f1; color: #333; position: relative; }
-#realNoBtn {
-  position: absolute;
-  top: -2px;
-  left: 0px;
-  font-size: 0.5rem;
-  color: rgba(0,0,0,0.25);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  opacity: 0.25;
-}
-#realNoBtn:hover { opacity: 0.5; }
 .final, .caught { display: none; }
 .spinner { width: 36px; height: 36px; border: 4px solid #eee; border-top: 4px solid #ff4d6d; border-radius: 50%; animation: spin 0.9s linear infinite; margin: 0 auto 1rem; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -51,18 +40,63 @@ button { border: none; padding: 0.8rem 1.4rem; border-radius: 999px; font-size: 
 input { padding: 0.6rem; font-size: 1rem; margin-top: 1rem; width: 70%; text-align: center; }
 .shake { animation: shake 0.3s; }
 @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } 100% { transform: translateX(0); } }
+
+/* Responsive hidden no inside 'normal' */
+.normal-container { position: relative; display: inline-block; }
+#realNoBtn {
+  position: absolute;
+  top: 0;
+  left: 20%;
+  font-size: 0.5rem;
+  color: rgba(0,0,0,0.25);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.25;
+}
+#realNoBtn:hover { opacity: 0.5; }
+
+#backBtn {
+  margin-top:1rem;
+  background:#ff4d6d;
+  color:white;
+  padding:0.7rem 1.2rem;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+}
+
+/* Confetti */
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  top: -10px;
+  border-radius: 50%;
+  opacity: 0.9;
+  z-index: 1000;
+  animation: fall linear forwards;
+}
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
 </style>
 </head>
 <body>
 
+<!-- QUESTION -->
 <div class="card" id="questionCard">
   <h1>Hey Kanmani 👀</h1>
   <p>
     I tried being chill about this.<br>
     That lasted about five seconds.<br><br>
-    You make <span style="position: relative;">nor
-      <button id="realNoBtn">no</button>
-    </span>mal days better just by existing.<br><br>
+    You make <span class="normal-container">n
+      <span style="position: relative;">or
+        <button id="realNoBtn">no</button>
+      </span>mal</span> days better just by existing.<br><br>
     So one honest question:<br>
     Will you be my <strong>Valentine? ❤️</strong>
   </p>
@@ -72,16 +106,20 @@ input { padding: 0.6rem; font-size: 1rem; margin-top: 1rem; width: 70%; text-ali
   </div>
 </div>
 
+<!-- YES CARD -->
 <div class="card final" id="finalCard">
-  <div class="word" style="font-size:3rem;">❤️</div>
-  <h1>KNEW IT.</h1>
+  <h2 style="color:#ff4d6d; margin-bottom:0.5rem; font-size:1.2rem; font-weight:bold; animation:bounceIn 0.6s;">EVERYBODY SHE FINALLY SAID YES!!!! 🎉</h2>
+  <div class="word" style="font-size:3rem; margin:0.5rem 0;">❤️</div>
+  <h1 style="margin-bottom:0.5rem;">KNEW IT.</h1>
   <p>Elite decision.<br><br>Valentine’s with you is going to be perfect 💕</p>
 </div>
 
+<!-- CAUGHT -->
 <div class="card caught" id="caughtCard">
   <div class="spinner" id="loader"></div>
   <h1 id="caughtText"></h1>
   <div id="riddleArea"></div>
+  <button id="backBtn">Go back 😌</button>
 </div>
 
 <script>
@@ -92,32 +130,40 @@ const caughtText = document.getElementById("caughtText");
 const riddleArea = document.getElementById("riddleArea");
 const yesBtn = document.getElementById("yesBtn");
 const realNoBtn = document.getElementById("realNoBtn");
+const backBtn = document.getElementById("backBtn");
+const fakeNoBtn = document.getElementById("fakeNoBtn");
+const loader = document.getElementById("loader");
 
 let noCount = 0;
 
+// YES button with confetti
 yesBtn.addEventListener("click", () => {
   questionCard.style.display = "none";
   finalCard.style.display = "block";
+  launchConfetti();
 });
 
+// hidden NO sequences
 realNoBtn.addEventListener("click", () => {
   noCount++;
   questionCard.style.display = "none";
   caughtCard.style.display = "block";
-  document.getElementById("loader").style.display = "block";
+  loader.style.display = "block";
   caughtText.innerHTML = "";
   riddleArea.innerHTML = "";
+  backBtn.style.display = "none";
 
   setTimeout(() => {
-    document.getElementById("loader").style.display = "none";
+    loader.style.display = "none";
 
     if(noCount === 1){
       bounceWords(["Shaani","banri","h?"]);
+      backBtn.style.display = "inline-block";
     } else if(noCount === 2){
       bounceWords(["Jyada","hi","shaani","banri","h?"]);
       setTimeout(showRiddle, 1500);
     } else {
-      caughtText.innerHTML = "Option nahi h HELLO?? 😏";
+      caughtText.innerHTML = "We both know how this ends 😏";
       riddleArea.innerHTML = `<button id="backToQuestion">Back to question</button>`;
       document.getElementById("backToQuestion").addEventListener("click", () => {
         caughtCard.style.display = "none";
@@ -125,6 +171,11 @@ realNoBtn.addEventListener("click", () => {
       });
     }
   }, 800);
+});
+
+backBtn.addEventListener("click", () => {
+  caughtCard.style.display = "none";
+  questionCard.style.display = "block";
 });
 
 function bounceWords(words){
@@ -159,13 +210,27 @@ function showRiddle(){
   });
 }
 
-// Optional: Move fakeNoBtn randomly
-const fakeNoBtn = document.getElementById("fakeNoBtn");
+// Move fakeNoBtn randomly
 fakeNoBtn.addEventListener("mouseover", ()=>{
   const x=Math.random()*220-110;
   const y=Math.random()*220-110;
   fakeNoBtn.style.transform=`translate(${x}px,${y}px)`;
 });
+
+// Confetti
+function launchConfetti() {
+  const colors = ["#ff4d6d","#ffd166","#06d6a0","#4d96ff"];
+  for(let i=0;i<120;i++){
+    const c = document.createElement("div");
+    c.className="confetti";
+    c.style.left = Math.random()*100 + "vw";
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration = 2 + Math.random()*2 + "s";
+    c.style.width = c.style.height = (Math.random()*6 + 4) + "px";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
+}
 </script>
 
 </body>
