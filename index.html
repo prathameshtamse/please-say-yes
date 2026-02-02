@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Important Question 💌</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
   margin: 0;
@@ -15,6 +16,7 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   overflow: hidden;
 }
+
 .card {
   background: white;
   padding: 2.5rem;
@@ -25,36 +27,66 @@ body {
   position: relative;
   z-index: 2;
 }
-h1 { font-size: 2rem; margin-bottom: 1rem; min-height: 2.6rem; }
+
+h1 { font-size: 2rem; margin-bottom: 1rem; }
 h2 { margin: 0; }
 p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; }
-.buttons { display: flex; justify-content: center; gap: 1rem; }
-button { border: none; padding: 0.8rem 1.4rem; border-radius: 999px; font-size: 1rem; cursor: pointer; }
-#yesBtn { background: #ff4d6d; color: white; }
-#fakeNoBtn { background: #f1f1f1; color: #333; position: relative; }
-.final, .caught { display: none; }
-.spinner { width: 36px; height: 36px; border: 4px solid #eee; border-top: 4px solid #ff4d6d; border-radius: 50%; animation: spin 0.9s linear infinite; margin: 0 auto 1rem; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.word { display: inline-block; margin-right: 0.35rem; animation: bounceIn 0.45s ease forwards; }
-@keyframes bounceIn { 0% { transform: scale(0.2); opacity: 0; } 60% { transform: scale(1.25); opacity: 1; } 100% { transform: scale(1); } }
-input { padding: 0.6rem; font-size: 1rem; margin-top: 1rem; width: 70%; text-align: center; }
-.shake { animation: shake 0.3s; }
-@keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } 100% { transform: translateX(0); } }
 
-/* Responsive hidden no inside 'normal' */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+button {
+  border: none;
+  padding: 0.8rem 1.4rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#yesBtn { background: #ff4d6d; color: white; }
+#fakeNoBtn { background: #f1f1f1; color: #333; }
+
+.final, .caught { display: none; }
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 4px solid #eee;
+  border-top: 4px solid #ff4d6d;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.word {
+  display: inline-block;
+  margin-right: 0.35rem;
+  animation: bounceIn 0.45s ease forwards;
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.2); opacity: 0; }
+  60% { transform: scale(1.25); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
 .normal-container { position: relative; display: inline-block; }
+
 #realNoBtn {
   position: absolute;
   top: 0;
   left: 20%;
   font-size: 0.5rem;
-  color: rgba(0,0,0,0.25);
   background: transparent;
   border: none;
+  color: rgba(0,0,0,0.25);
   cursor: pointer;
-  opacity: 0.25;
 }
-#realNoBtn:hover { opacity: 0.5; }
 
 #backBtn {
   margin-top:1rem;
@@ -77,14 +109,33 @@ input { padding: 0.6rem; font-size: 1rem; margin-top: 1rem; width: 70%; text-ali
   z-index: 1000;
   animation: fall linear forwards;
 }
+
 @keyframes fall {
   to {
     transform: translateY(110vh) rotate(720deg);
     opacity: 0;
   }
 }
+
+/* Fade-out ending */
+#fadeOutScreen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #ff4d6d;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 2s ease;
+  z-index: 2000;
+}
 </style>
 </head>
+
 <body>
 
 <!-- QUESTION -->
@@ -94,82 +145,66 @@ input { padding: 0.6rem; font-size: 1rem; margin-top: 1rem; width: 70%; text-ali
     I tried being chill about this.<br>
     That lasted about five seconds.<br><br>
     You make <span class="normal-container">no
-        <button id="realNoBtn">no</button>
-      </span>rmal</span> days better just by existing.<br><br>
+      <button id="realNoBtn">no</button>
+    </span>rmal days better just by existing.<br><br>
     So one honest question:<br>
     Will you be my <strong>Valentine? ❤️</strong>
   </p>
+
   <div class="buttons">
     <button id="yesBtn">YES 💖</button>
     <button id="fakeNoBtn">No 🙃</button>
   </div>
 </div>
 
-<!-- YES CARD -->
+<!-- YES -->
 <div class="card final" id="finalCard">
-  <h2 style="color:#ff4d6d; margin-bottom:0.5rem; font-size:1.2rem; font-weight:bold; animation:bounceIn 0.6s;">EVERYBODY SHE FINALLY SAID YES!!!! 🎉</h2>
-  <div class="word" style="font-size:3rem; margin:0.5rem 0;">❤️</div>
-  <h1 style="margin-bottom:0.5rem;">KNEW IT.</h1>
-  <p>Elite decision.<br><br>Valentine’s with you is going to be perfect 💕</p>
+  <h2 style="color:#ff4d6d; font-size:1.1rem;">EVERYBODY SHE FINALLY SAID YES!!!! 🎉</h2>
+  <div class="word" style="font-size:3rem;">❤️</div>
+  <h1>KNEW IT.</h1>
+  <p>Elite decision.<br>Valentine’s with you is going to be perfect 💕</p>
 </div>
 
 <!-- CAUGHT -->
 <div class="card caught" id="caughtCard">
-  <div class="spinner" id="loader"></div>
+  <div class="spinner"></div>
   <h1 id="caughtText"></h1>
-  <div id="riddleArea"></div>
   <button id="backBtn">Go back 😌</button>
 </div>
+
+<!-- FADE OUT -->
+<div id="fadeOutScreen">See you soon, Sheryl 💕</div>
 
 <script>
 const questionCard = document.getElementById("questionCard");
 const finalCard = document.getElementById("finalCard");
-const caughtCard = document.getElementById("caughtCard");
-const caughtText = document.getElementById("caughtText");
-const riddleArea = document.getElementById("riddleArea");
+const fadeOutScreen = document.getElementById("fadeOutScreen");
 const yesBtn = document.getElementById("yesBtn");
+const fakeNoBtn = document.getElementById("fakeNoBtn");
 const realNoBtn = document.getElementById("realNoBtn");
 const backBtn = document.getElementById("backBtn");
-const fakeNoBtn = document.getElementById("fakeNoBtn");
-const loader = document.getElementById("loader");
+const caughtCard = document.getElementById("caughtCard");
+const caughtText = document.getElementById("caughtText");
 
 let noCount = 0;
 
-// YES button with confetti
+// YES
 yesBtn.addEventListener("click", () => {
   questionCard.style.display = "none";
   finalCard.style.display = "block";
   launchConfetti();
+
+  setTimeout(() => {
+    fadeOutScreen.style.opacity = "1";
+  }, 3500);
 });
 
-// hidden NO sequences
+// NO logic
 realNoBtn.addEventListener("click", () => {
   noCount++;
   questionCard.style.display = "none";
   caughtCard.style.display = "block";
-  loader.style.display = "block";
-  caughtText.innerHTML = "";
-  riddleArea.innerHTML = "";
-  backBtn.style.display = "none";
-
-  setTimeout(() => {
-    loader.style.display = "none";
-
-    if(noCount === 1){
-      bounceWords(["Shaani","banri","h?"]);
-      backBtn.style.display = "inline-block";
-    } else if(noCount === 2){
-      bounceWords(["Jyada","hi","shaani","banri","h?"]);
-      setTimeout(showRiddle, 1500);
-    } else {
-      caughtText.innerHTML = "We both know how this ends 😏";
-      riddleArea.innerHTML = `<button id="backToQuestion">Back to question</button>`;
-      document.getElementById("backToQuestion").addEventListener("click", () => {
-        caughtCard.style.display = "none";
-        questionCard.style.display = "block";
-      });
-    }
-  }, 800);
+  caughtText.innerHTML = "Shaani banri h? 😏";
 });
 
 backBtn.addEventListener("click", () => {
@@ -177,43 +212,10 @@ backBtn.addEventListener("click", () => {
   questionCard.style.display = "block";
 });
 
-function bounceWords(words){
-  caughtText.innerHTML="";
-  let i=0;
-  const interval=setInterval(()=>{
-    const span=document.createElement("span");
-    span.className="word";
-    span.textContent=words[i];
-    caughtText.appendChild(span);
-    i++;
-    if(i===words.length) clearInterval(interval);
-  }, 350);
-}
-
-function showRiddle(){
-  riddleArea.innerHTML=`
-    <p>Maarunga kheech ke giregi ____ pe</p>
-    <input id="answer" placeholder="fill the blank">
-  `;
-  const input=document.getElementById("answer");
-  input.addEventListener("keydown", e=>{
-    if(e.key==="Enter"){
-      if(input.value.trim().toLowerCase()==="beach"){
-        caughtCard.style.display="none";
-        questionCard.style.display="block";
-      } else {
-        input.classList.add("shake");
-        setTimeout(()=>input.classList.remove("shake"),300);
-      }
-    }
-  });
-}
-
-// Move fakeNoBtn randomly
-fakeNoBtn.addEventListener("mouseover", ()=>{
-  const x=Math.random()*220-110;
-  const y=Math.random()*220-110;
-  fakeNoBtn.style.transform=`translate(${x}px,${y}px)`;
+// fake no dodge
+fakeNoBtn.addEventListener("mouseover", () => {
+  fakeNoBtn.style.transform =
+    `translate(${Math.random()*200-100}px, ${Math.random()*200-100}px)`;
 });
 
 // Confetti
@@ -225,7 +227,6 @@ function launchConfetti() {
     c.style.left = Math.random()*100 + "vw";
     c.style.background = colors[Math.floor(Math.random()*colors.length)];
     c.style.animationDuration = 2 + Math.random()*2 + "s";
-    c.style.width = c.style.height = (Math.random()*6 + 4) + "px";
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),4000);
   }
@@ -234,4 +235,3 @@ function launchConfetti() {
 
 </body>
 </html>
-
