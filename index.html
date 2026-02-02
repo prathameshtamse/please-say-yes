@@ -187,7 +187,7 @@ button:disabled{
 
 <!-- QUESTION -->
 <div class="card" id="questionCard">
-  <h1>Hey Kanmani 👀</h1>
+  <h1>Hey Sheryl 👀</h1>
   <p>
     I tried being chill about this.<br>
     That lasted five seconds.<br><br>
@@ -262,6 +262,7 @@ const fadeout=document.getElementById("fadeout");
 const yesBtn=document.getElementById("yesBtn");
 const fakeNoBtn=document.getElementById("fakeNoBtn");
 const realNoBtn=document.getElementById("realNoBtn");
+const movieBtn=document.getElementById("movieBtn");
 
 const caughtText=document.getElementById("caughtText");
 const riddleArea=document.getElementById("riddleArea");
@@ -283,6 +284,12 @@ yesBtn.onclick=()=>{
   finalCard.style.display="block";
   launchConfetti();
   startCountdown();
+};
+
+/* Movie button click */
+movieBtn.onclick=()=>{
+  finalCard.style.display="none";
+  movieCard.style.display="block";
 };
 
 /* Countdown */
@@ -333,7 +340,7 @@ realNoBtn.onclick=()=>{
       setTimeout(showRiddle,1400);
     }
     else{
-      caughtText.textContent="Chup-chap back daba de 😌";
+      caughtText.textContent="Chup-chap back dabade 😌";
       riddleArea.innerHTML=`<button id="forceBack">Back to the question</button>`;
       document.getElementById("forceBack").onclick=()=>{
         caughtCard.style.display="none";
@@ -384,7 +391,7 @@ fakeNoBtn.onmouseover=()=>{
   fakeNoBtn.style.transform=`translate(${Math.random()*200-100}px,${Math.random()*200-100}px)`;
 };
 
-/* Final */
+/* Final choice buttons (Songs / Games) */
 document.querySelectorAll(".choiceBtn").forEach(btn=>{
   btn.onclick=()=>{
     finalCard.style.display="none";
@@ -392,6 +399,7 @@ document.querySelectorAll(".choiceBtn").forEach(btn=>{
   };
 });
 
+/* Show final screenshot & fadeout */
 function showFinal(text){
   screenshotCard.style.display="block";
   finalChoice.textContent=`This Valentine, we chose: ${text}`;
