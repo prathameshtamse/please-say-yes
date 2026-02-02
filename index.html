@@ -21,7 +21,7 @@ body {
   background: white;
   padding: 2.5rem;
   border-radius: 18px;
-  width: min(90%, 420px);
+  width: min(90%, 440px);
   text-align: center;
   box-shadow: 0 25px 50px rgba(0,0,0,0.15);
   position: relative;
@@ -29,54 +29,30 @@ body {
 }
 
 h1 { font-size: 2rem; margin-bottom: 1rem; }
-h2 { margin: 0; }
-p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; }
+h2 { margin-bottom: 0.5rem; }
+p { font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.2rem; }
 
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.8rem;
+  flex-wrap: wrap;
 }
 
 button {
   border: none;
-  padding: 0.8rem 1.4rem;
+  padding: 0.7rem 1.3rem;
   border-radius: 999px;
   font-size: 1rem;
   cursor: pointer;
 }
 
 #yesBtn { background: #ff4d6d; color: white; }
-#fakeNoBtn { background: #f1f1f1; color: #333; }
+#fakeNoBtn { background: #f1f1f1; }
 
-.final, .caught { display: none; }
-
-.spinner {
-  width: 36px;
-  height: 36px;
-  border: 4px solid #eee;
-  border-top: 4px solid #ff4d6d;
-  border-radius: 50%;
-  animation: spin 0.9s linear infinite;
-  margin: 0 auto 1rem;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.word {
-  display: inline-block;
-  margin-right: 0.35rem;
-  animation: bounceIn 0.45s ease forwards;
-}
-
-@keyframes bounceIn {
-  0% { transform: scale(0.2); opacity: 0; }
-  60% { transform: scale(1.25); opacity: 1; }
-  100% { transform: scale(1); }
-}
+.final, .choices, .screenshot { display: none; }
 
 .normal-container { position: relative; display: inline-block; }
-
 #realNoBtn {
   position: absolute;
   top: 0;
@@ -86,16 +62,6 @@ button {
   border: none;
   color: rgba(0,0,0,0.25);
   cursor: pointer;
-}
-
-#backBtn {
-  margin-top:1rem;
-  background:#ff4d6d;
-  color:white;
-  padding:0.7rem 1.2rem;
-  border-radius:999px;
-  border:none;
-  cursor:pointer;
 }
 
 /* Confetti */
@@ -109,29 +75,48 @@ button {
   z-index: 1000;
   animation: fall linear forwards;
 }
-
 @keyframes fall {
-  to {
-    transform: translateY(110vh) rotate(720deg);
-    opacity: 0;
-  }
+  to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
 }
 
-/* Fade-out ending */
-#fadeOutScreen {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
+/* Countdown */
+#countdown {
+  font-size: 1rem;
   font-weight: 600;
   color: #ff4d6d;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 2s ease;
-  z-index: 2000;
+  margin-bottom: 1rem;
+}
+
+/* Choices */
+.choice-btn {
+  background: #ffe3ea;
+  color: #333;
+}
+
+.choice-box {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.hidden { display: none; }
+
+textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-family: inherit;
+  resize: none;
+}
+
+/* Screenshot ending */
+.screenshot {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 </style>
 </head>
@@ -143,14 +128,12 @@ button {
   <h1>Hey Kanmani 👀</h1>
   <p>
     I tried being chill about this.<br>
-    That lasted about five seconds.<br><br>
+    That lasted five seconds.<br><br>
     You make <span class="normal-container">no
       <button id="realNoBtn">no</button>
     </span>rmal days better just by existing.<br><br>
-    So one honest question:<br>
     Will you be my <strong>Valentine? ❤️</strong>
   </p>
-
   <div class="buttons">
     <button id="yesBtn">YES 💖</button>
     <button id="fakeNoBtn">No 🙃</button>
@@ -159,60 +142,79 @@ button {
 
 <!-- YES -->
 <div class="card final" id="finalCard">
-  <h2 style="color:#ff4d6d; font-size:1.1rem;">EVERYBODY SHE FINALLY SAID YES!!!! 🎉</h2>
-  <div class="word" style="font-size:3rem;">❤️</div>
+  <h2 style="color:#ff4d6d;">EVERYBODY SHE FINALLY SAID YES!!!! 🎉</h2>
+  <div style="font-size:3rem;">❤️</div>
   <h1>KNEW IT.</h1>
-  <p>Elite decision.<br>Valentine’s with you is going to be perfect 💕</p>
+
+  <div id="countdown"></div>
+
+  <p>So… how are we doing Valentine’s?</p>
+
+  <div class="buttons">
+    <button class="choice-btn" data-choice="Movie Night">🎬 Movie Night</button>
+    <button class="choice-btn" data-choice="Songs & Chill">🎶 Songs & Chill</button>
+    <button class="choice-btn" data-choice="Games Together">🎮 Games Together</button>
+    <button class="choice-btn" data-choice="Something else">✍️ Something else</button>
+  </div>
 </div>
 
-<!-- CAUGHT -->
-<div class="card caught" id="caughtCard">
-  <div class="spinner"></div>
-  <h1 id="caughtText"></h1>
-  <button id="backBtn">Go back 😌</button>
+<!-- FINAL SCREENSHOT -->
+<div class="card screenshot" id="screenshotCard">
+  <h2>WE CHOSE THIS 💕</h2>
+  <p id="finalChoiceText"></p>
+  <p style="margin-top:1rem;">
+    Different cities.<br>
+    Same Valentine.<br><br>
+    See you soon, Sheryl ❤️
+  </p>
 </div>
-
-<!-- FADE OUT -->
-<div id="fadeOutScreen">See you soon, Sheryl 💕</div>
 
 <script>
+const yesBtn = document.getElementById("yesBtn");
 const questionCard = document.getElementById("questionCard");
 const finalCard = document.getElementById("finalCard");
-const fadeOutScreen = document.getElementById("fadeOutScreen");
-const yesBtn = document.getElementById("yesBtn");
+const screenshotCard = document.getElementById("screenshotCard");
+const finalChoiceText = document.getElementById("finalChoiceText");
 const fakeNoBtn = document.getElementById("fakeNoBtn");
-const realNoBtn = document.getElementById("realNoBtn");
-const backBtn = document.getElementById("backBtn");
-const caughtCard = document.getElementById("caughtCard");
-const caughtText = document.getElementById("caughtText");
-
-let noCount = 0;
+const countdownEl = document.getElementById("countdown");
 
 // YES
 yesBtn.addEventListener("click", () => {
   questionCard.style.display = "none";
   finalCard.style.display = "block";
   launchConfetti();
-
-  setTimeout(() => {
-    fadeOutScreen.style.opacity = "1";
-  }, 3500);
+  startCountdown();
 });
 
-// NO logic
-realNoBtn.addEventListener("click", () => {
-  noCount++;
-  questionCard.style.display = "none";
-  caughtCard.style.display = "block";
-  caughtText.innerHTML = "Shaani banri h? 😏";
+// Countdown to Feb 14
+function startCountdown() {
+  const target = new Date(new Date().getFullYear(), 1, 14, 0, 0, 0);
+  setInterval(() => {
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) {
+      countdownEl.textContent = "It’s Valentine’s 💘";
+      return;
+    }
+    const d = Math.floor(diff / (1000*60*60*24));
+    const h = Math.floor((diff / (1000*60*60)) % 24);
+    const m = Math.floor((diff / (1000*60)) % 60);
+    countdownEl.textContent =
+      `${d} days ${h} hrs ${m} mins to Valentine’s 💌`;
+  }, 1000);
+}
+
+// Choice handling → Screenshot ending
+document.querySelectorAll(".choice-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    finalCard.style.display = "none";
+    screenshotCard.style.display = "block";
+    finalChoiceText.textContent = `This Valentine, we chose: ${btn.dataset.choice}`;
+    launchConfetti();
+  });
 });
 
-backBtn.addEventListener("click", () => {
-  caughtCard.style.display = "none";
-  questionCard.style.display = "block";
-});
-
-// fake no dodge
+// Fake no dodge
 fakeNoBtn.addEventListener("mouseover", () => {
   fakeNoBtn.style.transform =
     `translate(${Math.random()*200-100}px, ${Math.random()*200-100}px)`;
@@ -221,12 +223,12 @@ fakeNoBtn.addEventListener("mouseover", () => {
 // Confetti
 function launchConfetti() {
   const colors = ["#ff4d6d","#ffd166","#06d6a0","#4d96ff"];
-  for(let i=0;i<120;i++){
-    const c = document.createElement("div");
+  for(let i=0;i<100;i++){
+    const c=document.createElement("div");
     c.className="confetti";
-    c.style.left = Math.random()*100 + "vw";
-    c.style.background = colors[Math.floor(Math.random()*colors.length)];
-    c.style.animationDuration = 2 + Math.random()*2 + "s";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration=2+Math.random()*2+"s";
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),4000);
   }
