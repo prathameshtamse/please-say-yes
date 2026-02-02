@@ -53,9 +53,6 @@ button:disabled{
   cursor:not-allowed;
 }
 
-#yesBtn{background:#ff4d6d;color:white}
-#fakeNoBtn{background:#f1f1f1}
-
 .final,.movies,.caught,.screenshot,.fadeout{display:none}
 
 /* Hidden NO inside normal */
@@ -105,11 +102,17 @@ button:disabled{
   100%{transform:translateX(0)}
 }
 
-/* Countdown */
+/* Countdown glowing */
 #countdown{
-  font-weight:600;
+  font-weight:700;
   color:#ff4d6d;
   margin:.8rem 0;
+  font-size:1.2rem;
+  animation:glowPulse 1.5s ease-in-out infinite alternate;
+}
+@keyframes glowPulse{
+  0%{text-shadow:0 0 5px #ff4d6d,0 0 10px #ff4d6d;}
+  100%{text-shadow:0 0 15px #ff4d6d,0 0 25px #ff4d6d;}
 }
 
 /* Movies */
@@ -120,7 +123,6 @@ button:disabled{
   margin-top:1rem;
   padding:0;
 }
-
 .movie{
   list-style:none;
   padding:.6rem .8rem;
@@ -128,11 +130,9 @@ button:disabled{
   cursor:pointer;
   transition:.2s;
 }
-
 .movie:hover{
   background:#ffe5ea;
 }
-
 .movie.selected{
   background:#ff4d6d;
   color:white;
@@ -160,6 +160,8 @@ button:disabled{
   font-weight:600;
   color:#ff4d6d;
   opacity:0;
+  z-index:9999;
+  pointer-events:none;
   animation:fadeAway 3s ease forwards;
 }
 @keyframes fadeAway{
@@ -176,6 +178,7 @@ button:disabled{
   top:-10px;
   border-radius:50%;
   animation:fall linear forwards;
+  z-index:1000;
 }
 @keyframes fall{
   to{transform:translateY(110vh) rotate(720deg);opacity:0}
@@ -187,7 +190,7 @@ button:disabled{
 
 <!-- QUESTION -->
 <div class="card" id="questionCard">
-  <h1>Hey Sheryl 👀</h1>
+  <h1>Hey Kanmani 👀</h1>
   <p>
     I tried being chill about this.<br>
     That lasted five seconds.<br><br>
@@ -219,7 +222,6 @@ button:disabled{
 <div class="card movies" id="movieCard">
   <h2>Movie Night It Is 🎬</h2>
   <p>Pick one. Choose wisely 😌</p>
-
   <ul class="movie-list" id="movieList">
     <li class="movie">Eternal Sunshine of the Spotless Mind</li>
     <li class="movie">Hasee Toh Phasee</li>
@@ -228,7 +230,6 @@ button:disabled{
     <li class="movie">Happy Days</li>
     <li class="movie">Yeto Vellipoyindhi Manasu</li>
   </ul>
-
   <button id="confirmMovie" disabled>We choose this 💕</button>
 </div>
 
@@ -242,14 +243,13 @@ button:disabled{
 
 <!-- SCREENSHOT -->
 <div class="card screenshot" id="screenshotCard">
-  <h2>WE CHOSE THIS 💕</h2><br>
+  <h2>WE CHOSE THIS 💕</h2>
   <p id="finalChoice"></p>
   <p>Different cities.<br>Same Valentine.</p>
 </div>
 
-<div class="fadeout" id="fadeout">
-  See you soon, Love ❤️
-</div>
+<!-- FADEOUT -->
+<div class="fadeout" id="fadeout">See you soon, Love ❤️</div>
 
 <script>
 const questionCard=document.getElementById("questionCard");
@@ -294,12 +294,18 @@ movieBtn.onclick=()=>{
 
 /* Countdown */
 function startCountdown(){
-  const target=new Date(new Date().getFullYear(),1,14);
+  const target=new Date(new Date().getFullYear(),1,14,0,0,0);
   setInterval(()=>{
-    const diff=target-new Date();
-    const d=Math.floor(diff/(1000*60*60*24));
-    const h=Math.floor((diff/(1000*60*60))%24);
-    countdownEl.textContent=`${d} days ${h} hours to Valentine’s 💌`;
+    const now=new Date();
+    let diff=Math.max(0,target-now);
+    const days=Math.floor(diff/(1000*60*60*24));
+    diff-=days*1000*60*60*24;
+    const hours=Math.floor(diff/(1000*60*60));
+    diff-=hours*1000*60*60;
+    const minutes=Math.floor(diff/(1000*60));
+    diff-=minutes*1000*60;
+    const seconds=Math.floor(diff/1000);
+    countdownEl.textContent=`${days}d ${hours}h ${minutes}m ${seconds}s to Valentine’s 💌`;
   },1000);
 }
 
@@ -404,16 +410,19 @@ function showFinal(text){
   screenshotCard.style.display="block";
   finalChoice.textContent=`This Valentine, we chose: ${text}`;
   launchConfetti();
-  setTimeout(()=>fadeout.style.display="flex",2000);
+  fadeout.style.display="flex"; 
+  fadeout.style.opacity="1";
+  setTimeout(()=>fadeout.style.opacity="0",3000);
 }
 
-/* Confetti */
+/* Confetti streams */
 function launchConfetti(){
   const colors=["#ff4d6d","#ffd166","#06d6a0","#4d96ff"];
-  for(let i=0;i<90;i++){
+  for(let i=0;i<120;i++){
     const c=document.createElement("div");
     c.className="confetti";
     c.style.left=Math.random()*100+"vw";
+    c.style.width=c.style.height=(Math.random()*6+4)+"px";
     c.style.background=colors[Math.floor(Math.random()*colors.length)];
     c.style.animationDuration=2+Math.random()*2+"s";
     document.body.appendChild(c);
@@ -421,7 +430,5 @@ function launchConfetti(){
   }
 }
 </script>
-
 </body>
 </html>
-
